@@ -6,7 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,13 +21,19 @@ public class Album {
     private Long id;
 
     private boolean isSingle;
+
     private boolean isCompilation;
-    private String title, genre;
+
+    private String title;
+
+    private String genre;
+
     private Date dateOfProduction;
 
     @OneToMany(mappedBy = "album")
     private List<Track> tracks = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "albums")
-    private List<Author> authors = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "fk_author")
+    private Author author;
 }
