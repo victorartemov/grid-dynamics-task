@@ -40,7 +40,8 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public AuthorDTO findByNickName(String nickName) {
-        return authorRepository.findByNickName(nickName)
+        return authorRepository
+                .findByNickName(nickName)
                 .map(authorMapper::authorToAuthorDTO)
                 .orElseThrow(ResourceNotFoundException::new);
     }

@@ -31,7 +31,7 @@ public class AuthorController {
         return new AuthorListDTO(authorService.findAll());
     }
 
-    @GetMapping("/{nickName}")
+    @GetMapping("/search/{nickName}")
     @ResponseStatus(HttpStatus.OK)
     public AuthorDTO getAuthorByNickName(@PathVariable String nickName) {
         return authorService.findByNickName(nickName);
@@ -46,7 +46,7 @@ public class AuthorController {
     @DeleteMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
     public void deleteAuthorById(@PathVariable Long id) {
-        deleteAuthorById(id);
+        authorService.deleteAuthorById(id);
     }
 
     @PostMapping
