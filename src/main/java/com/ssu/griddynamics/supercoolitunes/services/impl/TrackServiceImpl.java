@@ -30,7 +30,7 @@ public class TrackServiceImpl implements TrackService {
         return trackRepository
                 .findAll()
                 .stream()
-                .map(track -> trackMapper.trackToTrackDTO(track))
+                .map(trackMapper::trackToTrackDTO)
                 .collect(Collectors.toList());
     }
 

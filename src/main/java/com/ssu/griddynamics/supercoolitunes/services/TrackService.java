@@ -1,7 +1,5 @@
 package com.ssu.griddynamics.supercoolitunes.services;
 
-import com.ssu.griddynamics.supercoolitunes.api.v1.model.AlbumDTO;
-import com.ssu.griddynamics.supercoolitunes.api.v1.model.AuthorDTO;
 import com.ssu.griddynamics.supercoolitunes.api.v1.model.TrackDTO;
 
 import java.util.List;

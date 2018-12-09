@@ -27,7 +27,7 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository
                 .findAll()
                 .stream()
-                .map(customer -> authorMapper.authorToAuthorDTO(customer))
+                .map(authorMapper::authorToAuthorDTO)
                 .collect(Collectors.toList());
     }
 
