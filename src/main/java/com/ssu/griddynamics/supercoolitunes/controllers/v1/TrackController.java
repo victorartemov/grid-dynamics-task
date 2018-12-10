@@ -32,19 +32,19 @@ public class TrackController {
         return new TrackListDTO(trackService.findAll());
     }
 
-    @GetMapping({"/search/title"})
+    @GetMapping({"/search/by-title"})
     @ResponseStatus(HttpStatus.OK)
     public TrackDTO findByTitle(@RequestParam(value = "title") String title) {
         return trackService.findByTitle(title);
     }
 
-    @GetMapping({"/search/author"})
+    @GetMapping({"/search/by-author"})
     @ResponseStatus(HttpStatus.OK)
     public TrackDTO findByAuthor(@RequestParam(value = "authorName") String authorName) {
         return trackService.findByAuthor(authorName);
     }
 
-    @GetMapping({"/search/album"})
+    @GetMapping({"/search/by-album-title"})
     @ResponseStatus(HttpStatus.OK)
     public TrackDTO findByAlbum(@RequestParam(value = "albumTitle") String albumTitle) {
         return trackService.findByAlbum(albumTitle);
