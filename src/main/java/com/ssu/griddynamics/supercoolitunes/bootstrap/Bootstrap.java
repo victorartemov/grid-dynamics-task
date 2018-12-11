@@ -50,9 +50,6 @@ public class Bootstrap implements CommandLineRunner {
         author2.setNickName("Freddie Mercury");
         author2.setDateOfBirth(new Date(1946, 9, 5));
 
-        authorRepository.save(author1);
-        authorRepository.save(author2);
-
         Album album1 = new Album();
         album1.setCompilation(true);
         album1.setAuthor(author1);
@@ -86,6 +83,9 @@ public class Bootstrap implements CommandLineRunner {
         track2.setDuration(4);
         track2.setTitle("We Will Rock You");
         track2.setYear(Year.of(1977));
+
+        authorRepository.save(author1);
+        authorRepository.save(author2);
 
         albumRepository.save(album1);
         albumRepository.save(album2);

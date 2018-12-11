@@ -55,4 +55,11 @@ public class AuthorServiceImpl implements AuthorService {
     public void deleteAll() {
         authorRepository.deleteAll();
     }
+
+    @Override
+    public AuthorDTO findById(Long id) {
+        return authorRepository.findById(id)
+                .map(authorMapper::authorToAuthorDTO)
+                .orElseThrow(ResourceNotFoundException::new);
+    }
 }

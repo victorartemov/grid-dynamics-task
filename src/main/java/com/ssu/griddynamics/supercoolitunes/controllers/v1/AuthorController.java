@@ -55,4 +55,10 @@ public class AuthorController {
     public AuthorDTO createNewAuthor(@RequestBody AuthorDTO authorDTO) {
         return authorService.createNewAuthor(authorDTO);
     }
+
+    @GetMapping("/search/by-id")
+    @ResponseStatus(HttpStatus.OK)
+    public AuthorDTO findById(@RequestParam(value = "id") Long id) {
+        return authorService.findById(id);
+    }
 }

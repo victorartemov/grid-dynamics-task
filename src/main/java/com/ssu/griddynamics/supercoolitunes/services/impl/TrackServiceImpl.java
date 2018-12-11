@@ -12,6 +12,7 @@ import com.ssu.griddynamics.supercoolitunes.services.TrackService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,21 +67,37 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public TrackDTO createNewTrack(TrackDTO trackDTO) {
 
-        Author trackAuthor;
-
-        if (trackDTO.getAuthor() != null) {
-            trackAuthor = authorMapper.authorDTOtoAuthor(trackDTO.getAuthor());
-        } else {
-            trackAuthor = new Author();
-        }
-
         Track track = trackMapper.trackDTOtoTrack(trackDTO);
+
+        Author trackAuthor = obtainAuthorForTrack(trackDTO);
+
+        trackAuthor = checkIfAuthorAlreadyExistsOrSave(trackAuthor);
 
         track.setAuthor(trackAuthor);
 
-        authorRepository.save(trackAuthor);
-
         return trackMapper.trackToTrackDTO(trackRepository.save(track));
+    }
+
+    private Author checkIfAuthorAlreadyExistsOrSave(Author trackAuthor) {
+
+        Optional<Author> authorInDb = authorRepository.findByNickName(trackAuthor.getNickName());
+
+        if (authorInDb.isPresent()) {
+            return authorInDb.get();
+        }
+
+        return authorRepository.saveAndFlush(trackAuthor);
+    }
+
+    private Author obtainAuthorForTrack(TrackDTO trackDTO) {
+
+        Author trackAuthor = new Author();
+
+        if (trackDTO.getAuthor() != null) {
+            return authorMapper.authorDTOtoAuthor(trackDTO.getAuthor());
+        }
+
+        return trackAuthor;
     }
 
     @Override
