@@ -12,7 +12,7 @@ public class AlbumController {
 
     public static final String BASE_URL = "/api/v1/albums";
 
-    private AlbumService albumService;
+    private final AlbumService albumService;
 
     public AlbumController(AlbumService albumService) {
         this.albumService = albumService;

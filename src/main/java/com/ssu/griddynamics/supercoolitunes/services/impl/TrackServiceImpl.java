@@ -3,8 +3,10 @@ package com.ssu.griddynamics.supercoolitunes.services.impl;
 import com.ssu.griddynamics.supercoolitunes.api.v1.mapper.AuthorMapper;
 import com.ssu.griddynamics.supercoolitunes.api.v1.mapper.TrackMapper;
 import com.ssu.griddynamics.supercoolitunes.api.v1.model.TrackDTO;
+import com.ssu.griddynamics.supercoolitunes.domain.Author;
 import com.ssu.griddynamics.supercoolitunes.domain.Track;
 import com.ssu.griddynamics.supercoolitunes.exception.ResourceNotFoundException;
+import com.ssu.griddynamics.supercoolitunes.repositories.AuthorRepository;
 import com.ssu.griddynamics.supercoolitunes.repositories.TrackRepository;
 import com.ssu.griddynamics.supercoolitunes.services.TrackService;
 import org.springframework.stereotype.Service;
@@ -15,12 +17,15 @@ import java.util.stream.Collectors;
 @Service
 public class TrackServiceImpl implements TrackService {
 
-    private TrackRepository trackRepository;
-    private TrackMapper trackMapper;
-    private AuthorMapper authorMapper;
+    private final TrackRepository trackRepository;
+    private final AuthorRepository authorRepository;
+    private final TrackMapper trackMapper;
+    private final AuthorMapper authorMapper;
 
-    public TrackServiceImpl(TrackRepository trackRepository, TrackMapper trackMapper, AuthorMapper authorMapper) {
+    public TrackServiceImpl(TrackRepository trackRepository, AuthorRepository authorRepository,
+                            TrackMapper trackMapper, AuthorMapper authorMapper) {
         this.trackRepository = trackRepository;
+        this.authorRepository = authorRepository;
         this.trackMapper = trackMapper;
         this.authorMapper = authorMapper;
     }
@@ -60,9 +65,22 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public TrackDTO createNewTrack(TrackDTO trackDTO) {
-        Track savedTrack = trackRepository.save(trackMapper.trackDTOtoTrack(trackDTO));
 
-        return trackMapper.trackToTrackDTO(savedTrack);
+        Author trackAuthor;
+
+        if (trackDTO.getAuthor() != null) {
+            trackAuthor = authorMapper.authorDTOtoAuthor(trackDTO.getAuthor());
+        } else {
+            trackAuthor = new Author();
+        }
+
+        Track track = trackMapper.trackDTOtoTrack(trackDTO);
+
+        track.setAuthor(trackAuthor);
+
+        authorRepository.save(trackAuthor);
+
+        return trackMapper.trackToTrackDTO(trackRepository.save(track));
     }
 
     @Override
