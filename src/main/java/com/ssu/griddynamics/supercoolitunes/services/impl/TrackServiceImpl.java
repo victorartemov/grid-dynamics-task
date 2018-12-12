@@ -69,9 +69,7 @@ public class TrackServiceImpl implements TrackService {
 
         Track track = trackMapper.trackDTOtoTrack(trackDTO);
 
-        Author trackAuthor = obtainAuthorForTrack(trackDTO);
-
-        trackAuthor = checkIfAuthorAlreadyExistsOrSave(trackAuthor);
+        Author trackAuthor = checkIfAuthorAlreadyExistsOrSave(obtainAuthorForTrack(trackDTO));
 
         track.setAuthor(trackAuthor);
 

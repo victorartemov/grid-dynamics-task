@@ -34,7 +34,7 @@ public class AuthorController {
 
     @GetMapping("/search/by-nickname")
     @ResponseStatus(HttpStatus.OK)
-    public AuthorDTO getAuthorByNickName(@RequestParam(value = "nickName") String nickName) {
+    public AuthorDTO getAuthorByNickName(@RequestParam String nickName) {
         return authorService.findByNickName(nickName);
     }
 
@@ -58,7 +58,7 @@ public class AuthorController {
 
     @GetMapping("/search/by-id")
     @ResponseStatus(HttpStatus.OK)
-    public AuthorDTO findById(@RequestParam(value = "id") Long id) {
+    public AuthorDTO findById(@RequestParam Long id) {
         return authorService.findById(id);
     }
 }
